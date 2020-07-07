@@ -1,10 +1,17 @@
+import fs from "fs";
+import path from "path";
 import {} from "@testing-library/jest-dom/matchers";
 import { screen } from "@testing-library/dom";
 
-describe("type test", () => {
-  document.body.innerHTML = '<div role="dialog">test</div>';
+const html = fs.readFileSync(path.resolve(__dirname, "../arch.tmpl.js"));
+console.log(html.toString());
 
-  test("enum", () => {
+describe("type test", () => {
+  beforeEach(() => {
+    document.body.innerHTML = html.toString();
+  });
+
+  it("enum", () => {
     enum Color {
       Red = 0,
       Green,
@@ -15,7 +22,8 @@ describe("type test", () => {
     expect(c).toBe(0);
   });
 
-  test("dom", () => {
+  it("dom", () => {
+    // const div = getByRole(document.documentElement, "dialog");
     const div = screen.getByRole("dialog");
   });
 });
